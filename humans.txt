@@ -4,6 +4,7 @@
 		: https://github.com/mhnaufal
 
 /* THANKS */
+	Leo Roeser	: https://www.youtube.com/watch?v=BKz7rnbQyK4
 	Laith Harb	: https://www.youtube.com/watch?v=JaTbzPcyiOE
 	Bootstrap : https://getbootstrap.com
 	HTML boilerplate : https://gist.github.com/nunosans/3028849
