@@ -1,0 +1,15 @@
+/* TEAM */
+	Student: Muhammad Naufal Pratama.
+	Site: muhammadnaufalp@students.undip.ac.id
+		: https://github.com/mhnaufal
+
+/* THANKS */
+	Laith Harb	: https://www.youtube.com/watch?v=JaTbzPcyiOE
+	Bootstrap : https://getbootstrap.com
+	HTML boilerplate : https://gist.github.com/nunosans/3028849
+	human.txt boilerplate: https://perishablepress.com/humans-txt
+
+/* SITE */
+	Last update: 2022/01/24
+	Standards: HTML5, CSS3, Node.js, Express.js, EJS, MySQL, TypeORM
+	Software: Software used for the development
