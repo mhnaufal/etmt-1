@@ -16,7 +16,7 @@ const ormConfig: MysqlConnectionOptions = {
   username: DB_USER,
   password: DB_PASSWORD,
   database: DB_NAME,
-  entities: ['dist/src/**/*.entity.js'],
+  entities: ['src/**/*.entity.ts', 'dist/src/**/*.entity.js'],
   synchronize: false, // only foc local development
   logging: true,
   logger: 'file',
