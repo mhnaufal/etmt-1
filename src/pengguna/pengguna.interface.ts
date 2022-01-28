@@ -7,11 +7,11 @@ export interface IPengguna {
   email: string;
   password: string;
   nama: string;
-  jenis_kelamin: JenisKelamin;
-  no_hp: string;
-  agama: string;
+  jenisKelamin: JenisKelamin;
+  noHp?: string;
+  agama?: string;
   peran: Peran;
-  tgl_lahir?: Date;
-  golongan: string;
+  tglLahir?: Date;
+  golongan?: string;
   id_jabatan?: string;
 }
