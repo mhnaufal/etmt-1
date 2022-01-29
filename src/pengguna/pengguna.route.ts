@@ -1,4 +1,6 @@
+/** @Package */
 import express, { Router } from 'express';
+/** @Controller */
 import { getAllPengguna, createPengguna } from './pengguna.controller';
 
 const route: Router = express.Router();
