@@ -1,5 +1,6 @@
 import JenisKelamin from '@src/helpers/jenisKelamin.helper';
 import Peran from '@src/helpers/peran.helper';
+import { Jabatan } from '@src/jabatan/jabatan.entity';
 
 export interface IPengguna {
   id: string;
@@ -9,9 +10,10 @@ export interface IPengguna {
   nama: string;
   jenisKelamin: JenisKelamin;
   noHp?: string;
+  alamat?: string;
   agama?: string;
   peran: Peran;
   tglLahir?: Date;
   golongan?: string;
-  idJabatans?: string;
+  idJabatans: Jabatan;
 }
