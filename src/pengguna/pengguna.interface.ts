@@ -13,5 +13,5 @@ export interface IPengguna {
   peran: Peran;
   tglLahir?: Date;
   golongan?: string;
-  id_jabatan?: string;
+  idJabatans?: string;
 }
