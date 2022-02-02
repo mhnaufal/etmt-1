@@ -37,3 +37,7 @@ npm-debug.log
 
 # TypeORM migrations
 src/db
+
+# HTML CSS Template
+landing-page
+dashboard
