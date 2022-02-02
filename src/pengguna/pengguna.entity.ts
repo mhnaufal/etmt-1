@@ -1,5 +1,6 @@
+import bcrypt from 'bcrypt';
 /* eslint-disable import/prefer-default-export */
-import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, UpdateDateColumn, CreateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, UpdateDateColumn, CreateDateColumn, ManyToOne, JoinColumn, BeforeInsert } from 'typeorm';
 import JenisKelamin from '@src/helpers/jenisKelamin.helper';
 import Peran from '@src/helpers/peran.helper';
 // eslint-disable-next-line import/no-cycle
@@ -101,4 +102,9 @@ export class Pengguna extends BaseEntity {
     onUpdate: 'CURRENT_TIMESTAMP(6)',
   })
   updatedAt!: Date;
+
+  @BeforeInsert()
+  async hasPassword() {
+    this.password = await bcrypt.hash(this.password, 10);
+  }
 }
