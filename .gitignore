@@ -39,5 +39,5 @@ npm-debug.log
 src/db
 
 # HTML CSS Template
-landing-page
-dashboard
+/landing-page
+/dashboard
