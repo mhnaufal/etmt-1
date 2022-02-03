@@ -1,0 +1,40 @@
+<div class="row my-3">
+  <div class="col justify-content-end d-flex"><a href="/add-mail"
+      onclick="Swal.fire('Mail Added!', `${perihal}`, 'success');" type="button"
+      class="btn btn-success align-self-center bi bi-plus-circle-fill"> Add New Mail</a></div>
+</div>
+
+<table class="table table-bordered">
+  {{#if results}}
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col" class="text-center">ID</th>
+      <th scope="col" class="text-center">No. Surat</th>
+      <th scope="col" class="text-center">Perihal</th>
+      <th scope="col" class="text-center">Ringkasan</th>
+      <th scope="col" class="text-center">Tanggal Masuk</th>
+      <th scope="col" class="text-end text-center">Action</th>
+    </tr>
+  </thead>
+  {{#each results}}
+  <tbody>
+    <tr>
+      <th scope="row">{{ this.id }}</th>
+      <td>{{ this.no_surat }}</td>
+      <td>{{ this.perihal }}</td>
+      <td>{{ this.ringkasan }}</td>
+      <td>{{ this.created_at }}</td>
+      <td class="text-end">
+        <a href="/edit-mail/{{{this.id}}}" type="button" class="btn btn-primary btn-small m-2"><i
+            class="bi bi-eye"></i>Detail</a>
+        <br>
+        <a href="/delete-mail/{{{this.id}}}" type="button" class="btn btn-danger btn-small m-2"><i
+            class="bi bi-x-circle"></i>Delete</a>
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+{{else}}
+<p class="text-center fs-4 fst-italic">Empty</p>
+{{/if}}
