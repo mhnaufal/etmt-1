@@ -1,7 +1,8 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable import/prefer-default-export */
 import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, UpdateDateColumn, CreateDateColumn, OneToMany } from 'typeorm';
-// eslint-disable-next-line import/no-cycle
 import { Pengguna } from '@src/pengguna/pengguna.entity';
+import { Disposisi } from '@src/disposisi/disposisi.entity';
 
 @Entity('jabatan')
 export class Jabatan extends BaseEntity {
@@ -20,8 +21,11 @@ export class Jabatan extends BaseEntity {
   })
   kode!: string;
 
-  @OneToMany(() => Pengguna, pengguna => pengguna.idJabatans)
-  penggunas!: Pengguna[];
+  @OneToMany(() => Pengguna, pengguna => pengguna.idJabatan)
+  pengguna!: Pengguna[];
+
+  @OneToMany(() => Disposisi, disposisi => disposisi.idTujuanJabatan)
+  diposisi!: Disposisi[];
 
   @CreateDateColumn({
     name: 'created_at',
