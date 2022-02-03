@@ -86,7 +86,7 @@ export class Pengguna extends BaseEntity {
 
   @ManyToOne(() => Jabatan, jabatan => jabatan.id)
   @JoinColumn({ name: 'id_jabatan', referencedColumnName: 'id' })
-  idJabatans!: Jabatan;
+  idJabatan!: Jabatan;
 
   @CreateDateColumn({
     name: 'created_at',
