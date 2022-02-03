@@ -1,7 +1,11 @@
 import { Request, Response } from 'express';
 
 const renderLandingPage = (req: Request, res: Response): void => {
-  res.render('landingpage');
+  res.render('landingpage', { layout: false });
 };
 
-export default renderLandingPage;
+const renderLoginPage = (req: Request, res: Response): void => {
+  res.render('login', { layout: false });
+};
+
+export { renderLandingPage, renderLoginPage };

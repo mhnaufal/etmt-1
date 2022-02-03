@@ -1,12 +1,18 @@
+import path from 'path';
+/** @Package */
+import express, { Express } from 'express';
+import { createConnection } from 'typeorm';
+import { engine } from 'express-handlebars';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
-import express, { Express } from 'express';
-import path from 'path';
-import { createConnection } from 'typeorm';
-import ormConfig from '../ormconfig';
-import errorMiddleware from './middlewares/error.middleware';
-import { penggunaRoute } from './pengguna/pengguna.route';
+/** @Utils */
 import logger from './utils/logger';
+import ormConfig from '../ormconfig';
+import HttpException from './utils/HttpException';
+import errorMiddleware from './middlewares/error.middleware';
+/** @Route */
+import { homeRoute } from './home/home.route';
+import { penggunaRoute } from './pengguna/pengguna.route';
 
 dotenv.config();
 
@@ -25,19 +31,22 @@ const server = async () => {
     app.use(express.static(path.join(__dirname, 'public')));
 
     /** Setting up the view engine */
+    app.engine('hbs', engine({ extname: '.hbs', defaultLayout: 'main' }));
+    app.set('view engine', 'hbs');
+    app.set('views', path.join(__dirname, 'views'));
+    app.enable('view cache');
 
     /** Database */
     const db = await createConnection(ormConfig);
 
     /** Routes */
+    app.use(homeRoute);
     app.use(penggunaRoute);
 
-    app.use('/', (req, res) => {
-      logger.info(req.ip);
-      res.send({ status: 'SUCCESS' });
+    app.use((req, res, next) => {
+      const error = new HttpException(404, 'Not Found');
+      errorMiddleware(error, req, res, next);
     });
-
-    app.use(errorMiddleware);
 
     /** Run server */
     app.listen(PORT, HOST, () => {
