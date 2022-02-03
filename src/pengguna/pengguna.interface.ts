@@ -15,5 +15,6 @@ export interface IPengguna {
   peran: Peran;
   tglLahir?: Date;
   golongan?: string;
-  idJabatans: Jabatan;
+  idJabatans?: Jabatan;
+  isFirstLogin?: boolean;
 }

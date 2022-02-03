@@ -1,9 +1,11 @@
 /* eslint-disable import/prefer-default-export */
+/** @Package */
 import { DeleteResult, EntityRepository, Repository, UpdateResult } from 'typeorm';
+/** @Utils */
+import { IPengguna } from '@src/pengguna/pengguna.interface';
 import { Pengguna } from '@src/pengguna/pengguna.entity';
-import { IPengguna } from './pengguna.interface';
-import HttpException from '@src/utils/HttpException';
-import { isEmpty } from '@src/helpers/isEmpty';
+import HttpException from '@src/helpers/HttpException';
+import { isEmpty } from '@src/helpers/isEmpty.helper';
 
 @EntityRepository(Pengguna)
 export class PenggunaRepository extends Repository<Pengguna> {
@@ -15,6 +17,13 @@ export class PenggunaRepository extends Repository<Pengguna> {
 
   async findByIdPengguna(id: string): Promise<IPengguna> {
     const pengguna: IPengguna | undefined = await this.findOne({ id });
+    if (!pengguna) throw new HttpException(404, 'Pengguna tidak ditemukan!');
+
+    return pengguna;
+  }
+
+  async findByEmailPengguna(email: string): Promise<IPengguna> {
+    const pengguna: IPengguna | undefined = await this.findOne({ email });
     if (!pengguna) throw new HttpException(404, 'Pengguna tidak ditemukan!');
 
     return pengguna;

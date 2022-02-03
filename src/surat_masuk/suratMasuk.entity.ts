@@ -1,12 +1,16 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable import/prefer-default-export */
-import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, UpdateDateColumn, CreateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, UpdateDateColumn, CreateDateColumn, OneToOne, ManyToOne, JoinColumn } from 'typeorm';
+import { Disposisi } from '@src/disposisi/disposisi.entity';
 import { JenisSurat } from '@src/jenis_surat/jenisSurat.entity';
 
-@Entity('surat_keluar')
-export class SuratKeluar extends BaseEntity {
+@Entity('surat_masuk')
+export class SuratMasuk extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: string;
+
+  @OneToOne(() => Disposisi, disposisi => disposisi.idSuratMasuk)
+  disposisi!: Disposisi;
 
   @ManyToOne(() => JenisSurat, jenisSurat => jenisSurat.id)
   @JoinColumn({ name: 'jenis_surat', referencedColumnName: 'id' })
@@ -24,10 +28,10 @@ export class SuratKeluar extends BaseEntity {
   tglSurat!: Date;
 
   @Column({ type: 'varchar', length: 255 })
-  tujuan!: string;
+  penerima!: string;
 
   @Column({ type: 'varchar', length: 255 })
-  pembuat!: string;
+  pengirim!: string;
 
   @Column({ type: 'varchar', length: 255 })
   perihal!: string;
