@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import passport from 'passport';
 import passportLocal from 'passport-local';
-import { Request } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { Pengguna } from '@src/pengguna/pengguna.entity';
 
 const LocalStrategy = passportLocal.Strategy;
@@ -38,5 +38,38 @@ passport.use(
     else done(undefined, false, { message: 'Invalid password!' });
   })
 );
+
+/**
+ * Login Required middleware.
+ */
+// eslint-disable-next-line consistent-return
+export const isAuthenticated = (req: Request, res: Response, next: NextFunction): void => {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/login');
+};
+
+// eslint-disable-next-line consistent-return
+export const isNotAuthenticated = (req: Request, res: Response, next: NextFunction): void => {
+  if (req.isAuthenticated()) {
+    return res.redirect('/dashboard');
+  }
+  next();
+};
+
+/**
+ * Authorization Required middleware.
+ */
+// export const isAuthorized = (req: Request, res: Response, next: NextFunction) => {
+//   const provider = req.path.split('/').slice(-1)[0];
+
+//   const user = req.user as UserDocument;
+//   if (find(user.tokens, { kind: provider })) {
+//     next();
+//   } else {
+//     res.redirect(`/auth/${provider}`);
+//   }
+// };
 
 export default passport;

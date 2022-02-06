@@ -6,6 +6,7 @@ import { engine } from 'express-handlebars';
 import session from 'express-session';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
+import methodOverride from 'method-override';
 /** @Utils */
 import { TypeormStore } from 'connect-typeorm';
 // eslint-disable-next-line import/default
@@ -62,6 +63,9 @@ const server = async () => {
 
   app.use(passport.initialize());
   app.use(passport.session());
+
+  /** Method override */
+  app.use(methodOverride('_method'));
 
   /** Routes */
   app.use(homeRoute);
