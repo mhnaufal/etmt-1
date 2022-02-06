@@ -1,7 +1,10 @@
+/* eslint-disable consistent-return */
+/** @Package */
 import bcrypt from 'bcrypt';
 import passport from 'passport';
 import passportLocal from 'passport-local';
 import { Request, Response, NextFunction } from 'express';
+/** @Utils */
 import { Pengguna } from '@src/pengguna/pengguna.entity';
 
 const LocalStrategy = passportLocal.Strategy;
@@ -13,7 +16,6 @@ passport.serializeUser<any, any>((req, pengguna, done) => {
 passport.deserializeUser(async (req: Request, user: Pengguna, done: any) => {
   try {
     const pengguna = await Pengguna.findOne(user.id);
-
     done(undefined, pengguna);
   } catch (error) {
     done(error);
@@ -24,25 +26,24 @@ passport.deserializeUser(async (req: Request, user: Pengguna, done: any) => {
  * Sign in using Email and Password.
  */
 passport.use(
-  // eslint-disable-next-line consistent-return
   new LocalStrategy({ usernameField: 'login_email', passwordField: 'login_password' }, async (email, password, done) => {
-    console.log(email + password);
     const pengguna = await Pengguna.findOne({ email });
     if (!pengguna) {
       return done(undefined, false, { message: 'No user found!' });
     }
 
     const isPasswordMatch = await bcrypt.compare(password, pengguna.password);
-
-    if (isPasswordMatch) done(undefined, pengguna);
-    else done(undefined, false, { message: 'Invalid password!' });
+    if (isPasswordMatch) {
+      done(undefined, pengguna);
+    } else {
+      done(undefined, false, { message: 'Invalid password!' });
+    }
   })
 );
 
 /**
  * Login Required middleware.
  */
-// eslint-disable-next-line consistent-return
 export const isAuthenticated = (req: Request, res: Response, next: NextFunction): void => {
   if (req.isAuthenticated()) {
     return next();
@@ -50,7 +51,10 @@ export const isAuthenticated = (req: Request, res: Response, next: NextFunction)
   res.redirect('/login');
 };
 
-// eslint-disable-next-line consistent-return
+/**
+ * Not Login Required middleware.
+ * this middleware prevent user for accessing the login & register method if they already have session
+ */
 export const isNotAuthenticated = (req: Request, res: Response, next: NextFunction): void => {
   if (req.isAuthenticated()) {
     return res.redirect('/dashboard');
