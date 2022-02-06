@@ -103,8 +103,8 @@ export class Pengguna extends BaseEntity {
   })
   updatedAt!: Date;
 
-  @BeforeInsert()
-  async hasPassword() {
-    this.password = await bcrypt.hash(this.password, 10);
-  }
+  // @BeforeInsert()
+  // async hasPassword() {
+  //   this.password = await bcrypt.hash(this.password, 10);
+  // }
 }
