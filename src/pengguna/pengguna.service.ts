@@ -2,7 +2,7 @@
 import { DeleteResult, EntityRepository, Repository, UpdateResult } from 'typeorm';
 import { Pengguna } from '@src/pengguna/pengguna.entity';
 import { IPengguna } from './pengguna.interface';
-import HttpException from '@src/utils/HttpException';
+import HttpException from '@src/helpers/HttpException';
 import { isEmpty } from '@src/helpers/isEmpty';
 
 @EntityRepository(Pengguna)

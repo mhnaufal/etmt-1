@@ -13,7 +13,7 @@ import { TypeormStore } from 'connect-typeorm';
 import passport from '@src/middlewares/passport.middleware';
 import logger from './utils/logger';
 import ormConfig from '../ormconfig';
-import HttpException from './utils/HttpException';
+import HttpException from './helpers/HttpException';
 import errorMiddleware from './middlewares/error.middleware';
 /** @Route */
 import { homeRoute } from './home/home.route';
