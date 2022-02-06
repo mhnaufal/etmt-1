@@ -20,6 +20,13 @@ export class PenggunaRepository extends Repository<Pengguna> {
     return pengguna;
   }
 
+  async findByEmailPengguna(email: string): Promise<IPengguna> {
+    const pengguna: IPengguna | undefined = await this.findOne({ email });
+    if (!pengguna) throw new HttpException(404, 'Pengguna tidak ditemukan!');
+
+    return pengguna;
+  }
+
   async findByNamaPengguna(nama: string): Promise<IPengguna> {
     const pengguna: IPengguna | undefined = await this.findOne({ nama });
     if (!pengguna) throw new HttpException(404, 'Pengguna tidak ditemukan!');
