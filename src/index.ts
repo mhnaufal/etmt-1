@@ -38,7 +38,7 @@ const server = async () => {
     /** Setting up the view engine */
     app.engine('hbs', engine({ extname: '.hbs', defaultLayout: 'main' }));
     app.set('view engine', 'hbs');
-    app.set('views', path.join(__dirname, 'views'));
+    app.set('views', path.join('views'));
     app.enable('view cache');
 
     /** Database */
