@@ -17,4 +17,10 @@ const renderDashboard = (req: Request, res: Response): void => {
   res.render('dashboard', { title: 'Dashboard' });
 };
 
-export { renderLandingPage, renderRegisterPage, renderLoginPage, renderDashboard };
+const uploadFile = (req: Request, res: Response): void => {
+  console.log(req.file);
+
+  res.send('Upload file success');
+};
+
+export { renderLandingPage, renderRegisterPage, renderLoginPage, renderDashboard, uploadFile };
