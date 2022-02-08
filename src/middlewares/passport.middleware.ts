@@ -29,14 +29,14 @@ passport.use(
   new LocalStrategy({ usernameField: 'login_email', passwordField: 'login_password' }, async (email, password, done) => {
     const pengguna = await Pengguna.findOne({ email });
     if (!pengguna) {
-      return done(undefined, false, { message: 'No user found!' });
+      return done(undefined, false, { message: 'Email tersebut belum terdaftar!' });
     }
 
     const isPasswordMatch = await bcrypt.compare(password, pengguna.password);
     if (isPasswordMatch) {
       done(undefined, pengguna);
     } else {
-      done(undefined, false, { message: 'Invalid password!' });
+      done(undefined, false, { message: 'Password salah!' });
     }
   })
 );
