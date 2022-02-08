@@ -6,6 +6,7 @@ import { engine } from 'express-handlebars';
 import methodOverride from 'method-override';
 import session from 'express-session';
 import bodyParser from 'body-parser';
+import flash from 'connect-flash';
 import dotenv from 'dotenv';
 /** @Utils */
 import { TypeormStore } from 'connect-typeorm';
@@ -31,7 +32,7 @@ const app: Express = express();
 const server = async () => {
   try {
     /** Setting up the middlewares */
-    app.use(bodyParser.urlencoded({ extended: false }));
+    app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
     app.use(express.static(path.join(__dirname, 'public')));
 
@@ -62,6 +63,9 @@ const server = async () => {
 
     app.use(passport.initialize());
     app.use(passport.session());
+
+    /** Express flash message */
+    app.use(flash());
 
     /** Method override */
     app.use(methodOverride('_method'));

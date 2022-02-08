@@ -15,6 +15,13 @@ const register = async (req: Request, res: Response, next: NextFunction): Promis
   const email = req.body.register_email;
   const password = req.body.register_password;
 
+  const isEmailUsed = await Pengguna.findOne({ email });
+
+  if (isEmailUsed) {
+    req.flash('error', 'Email tersebut telah terdaftar!');
+    return res.redirect('/register');
+  }
+
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -25,7 +32,7 @@ const register = async (req: Request, res: Response, next: NextFunction): Promis
 
     createdPengguna.save();
 
-    res.redirect('/login');
+    return res.redirect('/login');
   } catch (error) {
     logger.error(error);
     next(error);

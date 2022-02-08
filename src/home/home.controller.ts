@@ -6,11 +6,13 @@ const renderLandingPage = (req: Request, res: Response): void => {
 };
 
 const renderRegisterPage = (req: Request, res: Response): void => {
-  res.render('register', { layout: false });
+  const error = req.flash('error');
+  res.render('register', { error, layout: false });
 };
 
 const renderLoginPage = (req: Request, res: Response): void => {
-  res.render('login', { layout: false });
+  const error = req.flash('error');
+  res.render('login', { error, layout: false });
 };
 
 const renderDashboard = (req: Request, res: Response): void => {
