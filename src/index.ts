@@ -23,8 +23,8 @@ import { penggunaRoute } from '@src/pengguna/pengguna.route';
 dotenv.config();
 
 const APP_NAME: string = process.env.APP_NAME || 'App';
-const HOST: string = process.env.HOST || 'localhost';
-const PORT: number = Number(process.env.PORT) || 3000;
+const HOST: string = process.env.HOST || '0.0.0.0';
+const PORT: number = Number(process.env.PORT) || 5000;
 const ENV: string = process.env.ENV || 'development';
 
 const app: Express = express();
