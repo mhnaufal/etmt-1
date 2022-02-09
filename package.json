@@ -4,9 +4,9 @@
   "description": "Express Typescript TypeORM MySql Mail Management System",
   "main": "index.js",
   "scripts": {
-    "start": "node dist/src/index.js",
+    "start": "node -r ts-node/register/transpile-only -r tsconfig-paths/register dist/src/index.js",
     "start:dev": "nodemon --exec ts-node -r tsconfig-paths/register ./src/index.ts",
-    "start:prod": "node -r ts-node/register/transpile-only -r tsconfig-paths/register ./dist/src/index.js",
+    "start:prod": "node -r ts-node/register/transpile-only -r tsconfig-paths/register dist/src/index.js",
     "build": "tsc",
     "test": "jest",
     "test:watch": "jest --watch",
