@@ -5,7 +5,9 @@ import { createConnection } from 'typeorm';
 import { engine } from 'express-handlebars';
 import methodOverride from 'method-override';
 import session from 'express-session';
+import cors from 'cors';
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
 import flash from 'connect-flash';
 import dotenv from 'dotenv';
 /** @Utils */
@@ -31,19 +33,16 @@ const app: Express = express();
 
 const server = async () => {
   try {
-    /** Setting up the middlewares */
-    app.use(bodyParser.urlencoded({ extended: true }));
-    app.use(bodyParser.json());
-    app.use(express.static(path.join(__dirname, 'public')));
-
-    /** Setting up the view engine */
-    app.engine('hbs', engine({ extname: '.hbs', defaultLayout: 'main' }));
-    app.set('view engine', 'hbs');
-    app.set('views', path.join('views'));
-    app.enable('view cache');
-
     /** Database */
     const db = await createConnection(ormConfig);
+
+    /** Method override */
+    app.set('trust proxy', true);
+    app.use(methodOverride('_method'));
+    app.use(cors({ origin: true, credentials: true }));
+    app.use(cookieParser());
+    app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(bodyParser.json());
 
     /** Passport & Session */
     const sessionRepository = db.getRepository(Session);
@@ -67,8 +66,14 @@ const server = async () => {
     /** Express flash message */
     app.use(flash());
 
-    /** Method override */
-    app.use(methodOverride('_method'));
+    /** Setting up the middlewares */
+    app.use(express.static(path.join(__dirname, 'public')));
+
+    /** Setting up the view engine */
+    app.engine('hbs', engine({ extname: '.hbs', defaultLayout: 'main' }));
+    app.set('view engine', 'hbs');
+    app.set('views', path.join('views'));
+    app.enable('view cache');
 
     /** Routes */
     app.use(homeRoute);
