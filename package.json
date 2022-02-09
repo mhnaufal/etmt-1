@@ -16,7 +16,7 @@
     "migration:run": "npm run build && npm run typeorm migration:run",
     "migration:revert": "npm run typeorm migration:revert",
     "migration:reset": "npx rimraf dist/src/db && npx rimraf src/db",
-    "heroku-postbuild": "npm run migration:generate && npm run migration:run"
+    "heroku-postbuild": "npm run migration:generate testing1&& npm run migration:run"
   },
   "repository": {
     "type": "git",
