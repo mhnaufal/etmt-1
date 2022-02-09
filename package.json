@@ -36,6 +36,7 @@
   "engines": {
     "node": "16.13"
   },
+  "type": "module",
   "homepage": "https://github.com/mhnaufal/etmt-1#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
