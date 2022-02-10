@@ -4,12 +4,12 @@ import express, { Express } from 'express';
 import { createConnection } from 'typeorm';
 import { engine } from 'express-handlebars';
 import methodOverride from 'method-override';
-import session from 'express-session';
-import cors from 'cors';
-import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
+import session from 'express-session';
+import bodyParser from 'body-parser';
 import flash from 'connect-flash';
 import dotenv from 'dotenv';
+import cors from 'cors';
 /** @Utils */
 import { TypeormStore } from 'connect-typeorm';
 import logger from '@src/utils/logger';
@@ -27,22 +27,24 @@ dotenv.config();
 const APP_NAME: string = process.env.APP_NAME || 'App';
 const HOST: string = process.env.HOST || '0.0.0.0';
 const PORT: number = Number(process.env.PORT) || 5000;
-const ENV: string = process.env.ENV || 'development';
+const ENV: string = process.env.NODE_ENV || 'development';
 
 const app: Express = express();
 
 const server = async () => {
   try {
-    /** Database */
-    const db = await createConnection(ormConfig);
-
-    /** Method override */
+    /** Setting up the server & parser middlewares */
     app.set('trust proxy', true);
-    app.use(methodOverride('_method'));
     app.use(cors({ origin: true, credentials: true }));
     app.use(cookieParser());
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
+
+    /** Method override */
+    app.use(methodOverride('_method'));
+
+    /** Database */
+    const db = await createConnection(ormConfig);
 
     /** Passport & Session */
     const sessionRepository = db.getRepository(Session);
@@ -66,7 +68,7 @@ const server = async () => {
     /** Express flash message */
     app.use(flash());
 
-    /** Setting up the middlewares */
+    /** Setting up static page */
     app.use(express.static(path.join(__dirname, 'public')));
 
     /** Setting up the view engine */
