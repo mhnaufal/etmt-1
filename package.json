@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node -r ts-node/register/transpile-only -r tsconfig-paths/register dist/src/index.js",
     "start:dev": "nodemon --exec ts-node -r tsconfig-paths/register ./src/index.ts",
-    "start:prod": "node -r ts-node/register/transpile-only -r tsconfig-paths/register dist/src/index.js",
-    "build": "tsc",
+    "start:prod": "npm run build && NODE_ENV=production node dist/src/index.js",
+    "build": "tsc -p tsconfig.prod.json",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
@@ -15,8 +15,7 @@
     "migration:generate": "npm run build && npm run typeorm migration:generate -- -n",
     "migration:run": "npm run build && npm run typeorm migration:run",
     "migration:revert": "npm run typeorm migration:revert",
-    "migration:reset": "npx rimraf dist/src/db && npx rimraf src/db",
-    "heroku-postbuild": "npm run migration:generate testing1&& npm run migration:run"
+    "migration:reset": "npx rimraf dist/src/db && npx rimraf src/db"
   },
   "repository": {
     "type": "git",
