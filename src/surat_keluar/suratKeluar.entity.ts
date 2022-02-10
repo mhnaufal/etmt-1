@@ -20,7 +20,7 @@ export class SuratKeluar extends BaseEntity {
   })
   noSurat!: string;
 
-  @Column({ name: 'tgl_surat', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP(6)' })
+  @Column({ name: 'tgl_surat', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   tglSurat!: Date;
 
   @Column({ type: 'varchar', length: 255 })
