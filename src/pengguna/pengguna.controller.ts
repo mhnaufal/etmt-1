@@ -1,8 +1,10 @@
+/** @Package */
 import { NextFunction, Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
+/** @Utils */
 import logger from '@src/utils/logger';
-import { PenggunaRepository } from './pengguna.service';
-import { IPengguna } from './pengguna.interface';
+import { IPengguna } from '@src/pengguna/pengguna.interface';
+import { PenggunaRepository } from '@src/pengguna/pengguna.service';
 
 const getAllPengguna = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const penggunaService = getCustomRepository(PenggunaRepository);

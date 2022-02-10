@@ -1,11 +1,11 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable import/prefer-default-export */
 import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, UpdateDateColumn, CreateDateColumn, OneToMany } from 'typeorm';
-import { Pengguna } from '@src/pengguna/pengguna.entity';
-import { Disposisi } from '@src/disposisi/disposisi.entity';
+import { SuratMasuk } from '@src/surat_masuk/suratMasuk.entity';
+import { SuratKeluar } from '@src/surat_keluar/suratKeluar.entity';
 
-@Entity('jabatan')
-export class Jabatan extends BaseEntity {
+@Entity('jenis_surat')
+export class JenisSurat extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: string;
 
@@ -13,7 +13,7 @@ export class Jabatan extends BaseEntity {
     type: 'varchar',
     length: 255,
   })
-  jabatan!: string;
+  nama!: string;
 
   @Column({
     type: 'char',
@@ -21,11 +21,11 @@ export class Jabatan extends BaseEntity {
   })
   kode!: string;
 
-  @OneToMany(() => Pengguna, pengguna => pengguna.idJabatan)
-  pengguna!: Pengguna[];
+  @OneToMany(() => SuratMasuk, suratMasuk => suratMasuk.jenisSurat)
+  suratMasuk!: SuratMasuk[];
 
-  @OneToMany(() => Disposisi, disposisi => disposisi.idTujuanJabatan)
-  diposisi!: Disposisi[];
+  @OneToMany(() => SuratKeluar, suratKeluar => suratKeluar.jenisSurat)
+  suratKeluar!: SuratKeluar[];
 
   @CreateDateColumn({
     name: 'created_at',

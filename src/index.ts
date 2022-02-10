@@ -3,16 +3,22 @@ import path from 'path';
 import express, { Express } from 'express';
 import { createConnection } from 'typeorm';
 import { engine } from 'express-handlebars';
+import methodOverride from 'method-override';
+import session from 'express-session';
 import bodyParser from 'body-parser';
+import flash from 'connect-flash';
 import dotenv from 'dotenv';
 /** @Utils */
-import logger from './utils/logger';
+import { TypeormStore } from 'connect-typeorm';
+import logger from '@src/utils/logger';
 import ormConfig from '../ormconfig';
-import HttpException from './utils/HttpException';
-import errorMiddleware from './middlewares/error.middleware';
+import { Session } from '@src/utils/Session.entity';
+import HttpException from '@src/helpers/HttpException';
+import passport from '@src/middlewares/passport.middleware';
+import errorMiddleware from '@src/middlewares/error.middleware';
 /** @Route */
-import { homeRoute } from './home/home.route';
-import { penggunaRoute } from './pengguna/pengguna.route';
+import { homeRoute } from '@src/home/home.route';
+import { penggunaRoute } from '@src/pengguna/pengguna.route';
 
 dotenv.config();
 
@@ -26,23 +32,49 @@ const app: Express = express();
 const server = async () => {
   try {
     /** Setting up the middlewares */
-    app.use(bodyParser.urlencoded({ extended: false }));
+    app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
     app.use(express.static(path.join(__dirname, 'public')));
 
     /** Setting up the view engine */
     app.engine('hbs', engine({ extname: '.hbs', defaultLayout: 'main' }));
     app.set('view engine', 'hbs');
-    app.set('views', path.join(__dirname, 'views'));
+    app.set('views', path.join('views'));
     app.enable('view cache');
 
     /** Database */
     const db = await createConnection(ormConfig);
 
+    /** Passport & Session */
+    const sessionRepository = db.getRepository(Session);
+
+    app.use(
+      session({
+        secret: process.env.SESSION_SECRET || 'development',
+        resave: false,
+        saveUninitialized: false,
+        store: new TypeormStore({
+          cleanupLimit: 2,
+          limitSubquery: false,
+          ttl: 86400,
+        }).connect(sessionRepository),
+      })
+    );
+
+    app.use(passport.initialize());
+    app.use(passport.session());
+
+    /** Express flash message */
+    app.use(flash());
+
+    /** Method override */
+    app.use(methodOverride('_method'));
+
     /** Routes */
     app.use(homeRoute);
     app.use(penggunaRoute);
 
+    /** Error handler */
     app.use((req, res, next) => {
       const error = new HttpException(404, 'Not Found');
       errorMiddleware(error, req, res, next);

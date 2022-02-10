@@ -1,3 +1,4 @@
+/** @Package */
 import fs from 'fs';
 import winston from 'winston';
 import WinstonDaily from 'winston-daily-rotate-file';
