@@ -69,7 +69,7 @@ const server = async () => {
     app.use(flash());
 
     /** Setting up static page */
-    app.use(express.static(path.join(__dirname, 'public')));
+    app.use(express.static('public'));
 
     /** Setting up the view engine */
     app.engine('hbs', engine({ extname: '.hbs', defaultLayout: 'main' }));
