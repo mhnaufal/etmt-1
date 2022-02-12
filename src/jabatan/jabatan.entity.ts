@@ -1,6 +1,7 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable import/prefer-default-export */
 import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, UpdateDateColumn, CreateDateColumn, OneToMany } from 'typeorm';
+import { IsString, Length } from 'class-validator';
 import { Pengguna } from '@src/pengguna/pengguna.entity';
 import { Disposisi } from '@src/disposisi/disposisi.entity';
 
@@ -13,12 +14,15 @@ export class Jabatan extends BaseEntity {
     type: 'varchar',
     length: 255,
   })
+  @IsString({ message: 'Jabatan tidak diperbolehkan' })
   jabatan!: string;
 
   @Column({
     type: 'char',
     length: 15,
   })
+  @IsString({ message: 'Kode jabatan tidak diperbolehkan' })
+  @Length(15, 15)
   kode!: string;
 
   @OneToMany(() => Pengguna, pengguna => pengguna.idJabatan)
